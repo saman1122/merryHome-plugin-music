@@ -1,0 +1,5 @@
+{ 
+    "whosing": "qui chante (?P<searchValue>.+\\s?.*\\s?.*)",
+    "play": "(mets-moi|mets|lance-moi|lance|fais-moi écouter)( du)? (?P<searchValue>.+\\s?.*\\s?.*)",
+    "whatalbum": "(quels sont les album de|quels sont les albums de) (?P<searchValue>.+\\s?.*\\s?.*)"
+}
