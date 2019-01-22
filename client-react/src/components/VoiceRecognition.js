@@ -61,6 +61,11 @@ class VoiceRecognition extends Component {
                 console.log({"response":data.resultText});
                 window.speechSynthesis.speak(utterThis);
             }
+            if(data.resultAudio){
+                document.getElementById("audioSrc").innerHTML = "<audio controls id='audioPlayer'><source src='" + data.resultAudio + "' type='audio/mpeg'/>Your browser does not support the audio element.</audio>"
+                document.getElementById("audioPlayer").play();
+                console.log({"audio link: ":data.resultAudio});
+            }
         });
     }
 
@@ -81,6 +86,8 @@ class VoiceRecognition extends Component {
                { this.props.listening  ? 
                 <Button bsStyle="danger" onClick={stopListening}><Glyphicon glyph="stop" /> stop </Button> : 
                 <Button bsStyle="info" onClick={startListening }><Glyphicon glyph="play" /> start </Button> }
+                <div></div>
+            <div id="audioSrc"></div>
             </div>
         );
     };

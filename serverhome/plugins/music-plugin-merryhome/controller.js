@@ -56,7 +56,8 @@ class MusicController {
                 if(!textResponse){
                     res.end(JSON.stringify({resultText: "je n'ai pas d'informations"}));
                 }else{
-                    res.end(JSON.stringify({resultText: textResponse[0].previewUrl}));
+                    res.end(JSON.stringify({resultText: "Ok, je vous lance: " + textResponse[0].trackName,
+                                            resultAudio: textResponse[0].previewUrl}));
 
                 }
                 break;
