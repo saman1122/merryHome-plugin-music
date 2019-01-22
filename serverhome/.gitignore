@@ -23,7 +23,6 @@ package-lock.json
 # Coveralls
 /coverage
 /nbproject
-config.json
 
 # Benchmarking
 benchmarks/graphs
