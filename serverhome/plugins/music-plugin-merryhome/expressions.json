@@ -1,5 +1,5 @@
 { 
-    "whosing": "qui chante (?P<searchValue>.+\\s?.*\\s?.*)",
-    "play": "(mets-moi|mets|lance-moi|lance|fais-moi écouter)( du)? (?P<searchValue>.+\\s?.*\\s?.*)",
-    "whatalbum": "(quels sont les album de|quels sont les albums de) (?P<searchValue>.+\\s?.*\\s?.*)"
+    "whosing": "(qui|quel) (est le)?.?chante(ur (de|d'))? (?P<searchValue>.+\\s?.*\\s?.*)",
+    "play": "(((met|lance)(s)?.?(moi)?.?)|(fais.?moi écouter.?))(du)? (?P<searchValue>.+\\s?.*\\s?.*)",
+    "whatalbum": "quels sont les album(s)? de (?P<searchValue>.+\\s?.*\\s?.*)"
 }
