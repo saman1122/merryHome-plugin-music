@@ -12,11 +12,11 @@ class MusicController {
 		var requestUrl="https://itunes.apple.com/search?term=";
                 requestUrl += req.body.searchValue;
                 console.log(requestUrl);
-                var itunesReq = request('GET', requestUrl,{cache:'file'});
+                var itunesReq = request('GET', encodeURI(requestUrl),{cache:'file'});
                 var response = JSON.parse(itunesReq.getBody('utf8'));
                 var textResponse= parseDataResponse(response);
 		        console.log(textResponse);
-                if(!textResponse){
+                if(textResponse.length === 0){
                     res.end(JSON.stringify({resultText: "je n'ai pas d'informations"}));
                 }else{
                     res.end(JSON.stringify({resultText: textResponse[0].artistName}));
@@ -26,12 +26,12 @@ class MusicController {
 		        var requestUrl="https://itunes.apple.com/search?term=";
                 requestUrl += req.body.searchValue;
                 console.log(requestUrl);
-                var itunesReq = request('GET', requestUrl,{cache:'file'});
+                var itunesReq = request('GET', encodeURI(requestUrl),{cache:'file'});
                 var response = JSON.parse(itunesReq.getBody('utf8'));
                 var textResponse= parseDataResponse(response);
                 var map = {};
                 console.log(textResponse);
-                if(!textResponse){
+                if(textResponse.length === 0){
                     res.end(JSON.stringify({resultText: "je n'ai pas d'informations"}));
                 }else{
                     for(var indice in textResponse){
@@ -57,7 +57,7 @@ class MusicController {
                 console.log(itunesReq);
                 var response = JSON.parse(itunesReq.getBody('utf8'));
                 var textResponse= parseDataResponse(response);
-                if(!textResponse){
+                if(textResponse.length === 0){
                     res.end(JSON.stringify({resultText: "je n'ai pas d'informations"}));
                 }else{
                     res.end(JSON.stringify({resultText: "Ok, je vous lance: " + textResponse[0].trackName,
