@@ -63,13 +63,20 @@ class VoiceRecognition extends Component {
             }
             if(data.resultAudio){
 
-                const audioPlayer = document.getElementById("audioPlayer");
-                if(audioPlayer!== null){
-                    audioPlayer.pause();
+                const player = document.getElementById("player");
+                var playerHtml;
+                if(player!== null){
+                    player.pause();
                  }
+
                 setTimeout(()=> {
-                    document.getElementById("audioSrc").innerHTML = "<audio controls id='audioPlayer'><source src='" + data.resultAudio + "' type='audio/mpeg'/>Your browser does not support the audio element.</audio>"
-                    document.getElementById("audioPlayer").play();
+                    if(data.resultAudio.includes("audio")){
+                        playerHtml = "<audio controls id='player'><source src='" + data.resultAudio + "' type='audio/mpeg'/>Your browser does not support the audio element.</audio>";
+                    }else{
+                        playerHtml ="<video id='player' width='100%' controls><source src='" + data.resultAudio + "' type='video/mp4'></video>";
+                    }
+                    document.getElementById("playerDiv").innerHTML = playerHtml;
+                    document.getElementById("player").play();
                     document.getElementById("coverAlbum").innerHTML = "<img src='" + data.resultImage + "'>"
                     console.log({"audio link: ":data.resultAudio});
                 }, data.resultText.length * 100)
@@ -97,7 +104,7 @@ class VoiceRecognition extends Component {
                 <Button bsStyle="info" onClick={startListening }><Glyphicon glyph="play" /> start </Button> }
                 <div></div>
             <div id="coverAlbum"></div>
-            <div id="audioSrc"></div>
+            <div id="playerDiv"></div>
             </div>
         );
     };
