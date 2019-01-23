@@ -62,9 +62,17 @@ class VoiceRecognition extends Component {
                 window.speechSynthesis.speak(utterThis);
             }
             if(data.resultAudio){
-                document.getElementById("audioSrc").innerHTML = "<audio controls id='audioPlayer'><source src='" + data.resultAudio + "' type='audio/mpeg'/>Your browser does not support the audio element.</audio>"
-                document.getElementById("audioPlayer").play();
-                console.log({"audio link: ":data.resultAudio});
+
+                const audioPlayer = document.getElementById("audioPlayer");
+                if(audioPlayer!== null){
+                    audioPlayer.pause();
+                 }
+                setTimeout(()=> {
+                    document.getElementById("audioSrc").innerHTML = "<audio controls id='audioPlayer'><source src='" + data.resultAudio + "' type='audio/mpeg'/>Your browser does not support the audio element.</audio>"
+                    document.getElementById("audioPlayer").play();
+                    console.log({"audio link: ":data.resultAudio});
+                }, data.resultText.length * 100)
+
             }
         });
     }
