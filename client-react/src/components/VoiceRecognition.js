@@ -70,6 +70,7 @@ class VoiceRecognition extends Component {
                 setTimeout(()=> {
                     document.getElementById("audioSrc").innerHTML = "<audio controls id='audioPlayer'><source src='" + data.resultAudio + "' type='audio/mpeg'/>Your browser does not support the audio element.</audio>"
                     document.getElementById("audioPlayer").play();
+                    document.getElementById("coverAlbum").innerHTML = "<img src='" + data.resultImage + "'>"
                     console.log({"audio link: ":data.resultAudio});
                 }, data.resultText.length * 100)
 
@@ -95,6 +96,7 @@ class VoiceRecognition extends Component {
                 <Button bsStyle="danger" onClick={stopListening}><Glyphicon glyph="stop" /> stop </Button> : 
                 <Button bsStyle="info" onClick={startListening }><Glyphicon glyph="play" /> start </Button> }
                 <div></div>
+            <div id="coverAlbum"></div>
             <div id="audioSrc"></div>
             </div>
         );

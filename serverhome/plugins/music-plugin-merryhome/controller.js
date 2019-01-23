@@ -57,7 +57,8 @@ class MusicController {
                     res.end(JSON.stringify({resultText: "je n'ai pas d'informations"}));
                 }else{
                     res.end(JSON.stringify({resultText: "Ok, je vous lance: " + textResponse[0].trackName,
-                                            resultAudio: textResponse[0].previewUrl}));
+                                            resultAudio: textResponse[0].previewUrl,
+                                            resultImage: textResponse[0].artworkUrl100}));
 
                 }
                 break;
@@ -79,7 +80,8 @@ function parseDataResponse(response){
 					"artistName": response.results[track].artistName,
 					"trackName": response.results[track].trackName,
 					"collectionName": response.results[track].collectionName,
-					"previewUrl": response.results[track].previewUrl
+					"previewUrl": response.results[track].previewUrl,
+					"artworkUrl100": response.results[track].artworkUrl100
 				});
 			}
 		}
