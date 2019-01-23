@@ -7,33 +7,30 @@ class MusicController {
     }
     
     postAction(req, res){
+		var requestUrl="https://itunes.apple.com/search?term=";
+		const searchValue = req.body.searchValue;
+        const searchValue2 = req.body.searchValue2;
+        const searchValue3 = req.body.searchValue3;
+        if(searchValue !== undefined){requestUrl += searchValue;}
+        if(searchValue2 !== undefined){requestUrl += searchValue2;}
+        if(searchValue3 !== undefined){requestUrl += searchValue3;}
+        var itunesReq = request('GET', encodeURI(requestUrl),{cache:'file'});
+        var response = JSON.parse(itunesReq.getBody('utf8'));
+        var textResponse= parseDataResponse(response);
+
         switch(req.params.actionId){
             case "whosing":
-		var requestUrl="https://itunes.apple.com/search?term=";
-                requestUrl += req.body.searchValue;
-                console.log(requestUrl);
-                var itunesReq = request('GET', encodeURI(requestUrl),{cache:'file'});
-                var response = JSON.parse(itunesReq.getBody('utf8'));
-                var textResponse= parseDataResponse(response);
-		        console.log(textResponse);
                 if(textResponse.length === 0){
-                    res.end(JSON.stringify({resultText: "je n'ai pas d'informations"}));
+                    res.end(JSON.stringify({resultText: "Désolé, je ne trouve pas ce que vous demandez"}));
                 }else{
                     res.end(JSON.stringify({resultText: textResponse[0].artistName}));
                 }
                 break;
-	    case "whatalbum":
-		        var requestUrl="https://itunes.apple.com/search?term=";
-                requestUrl += req.body.searchValue;
-                console.log(requestUrl);
-                var itunesReq = request('GET', encodeURI(requestUrl),{cache:'file'});
-                var response = JSON.parse(itunesReq.getBody('utf8'));
-                var textResponse= parseDataResponse(response);
-                var map = {};
-                console.log(textResponse);
+	        case "whatalbum":
                 if(textResponse.length === 0){
-                    res.end(JSON.stringify({resultText: "je n'ai pas d'informations"}));
+                    res.end(JSON.stringify({resultText: "Désolé, je ne trouve pas ce que vous demandez"}));
                 }else{
+                    var map = {};
                     for(var indice in textResponse){
 			            map[textResponse[indice].collectionName]=indice;
 	        	    }
@@ -46,21 +43,10 @@ class MusicController {
                 break;
 
             case "play":
-		        var requestUrl="https://itunes.apple.com/search?term=";
-		        const searchValue = req.body.searchValue;
-		        const searchValue2 = req.body.searchValue2;
-		        const searchValue3 = req.body.searchValue3;
-                if(searchValue !== undefined){requestUrl += searchValue;}
-                if(searchValue2 !== undefined){requestUrl += searchValue2;}
-                if(searchValue3 !== undefined){requestUrl += searchValue3;}
-                var itunesReq = request('GET', encodeURI(requestUrl),{cache:'file'});
-                console.log(itunesReq);
-                var response = JSON.parse(itunesReq.getBody('utf8'));
-                var textResponse= parseDataResponse(response);
                 if(textResponse.length === 0){
-                    res.end(JSON.stringify({resultText: "je n'ai pas d'informations"}));
+                    res.end(JSON.stringify({resultText: "Désolé, je ne trouve pas ce que vous demandez"}));
                 }else{
-                    res.end(JSON.stringify({resultText: "Ok, je vous lance: " + textResponse[0].trackName,
+                    res.end(JSON.stringify({resultText: "Ok, je vous lance: " + textResponse[0].trackName + " de " + textResponse[0].artistName,
                                             resultAudio: textResponse[0].previewUrl,
                                             resultImage: textResponse[0].artworkUrl100}));
                 }
