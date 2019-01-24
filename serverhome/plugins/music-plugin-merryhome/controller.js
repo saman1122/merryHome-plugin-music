@@ -36,17 +36,18 @@ class MusicController {
 	        	    }
                     let resultstr = '';
                     for (var i in map) {
-                        resultstr += i + " , ";
+                        resultstr += i + "\r\n";
                     }
-                    res.end(JSON.stringify({resultText: resultstr}));
+                    res.end(JSON.stringify({resultText: "Voici la liste des albums que j'ai trouvé :",
+                                            resultTextToShow: resultstr}));
                 }
                 break;
 
             case "play":
-                const resultType = textResponse[0].previewUrl.endsWith(".m4a") ? "resultAudio" : "resultVideo";
                 if(textResponse.length === 0){
                     res.end(JSON.stringify({resultText: "Désolé, je ne trouve pas ce que vous demandez"}));
                 }else{
+                    const resultType = textResponse[0].previewUrl.endsWith(".m4a") ? "resultAudio" : "resultVideo";
                     res.end(JSON.stringify({resultText: "Ok, je vous lance: " + textResponse[0].trackName + " de " + textResponse[0].artistName,
                                             [resultType]: textResponse[0].previewUrl,
                                             resultImage: textResponse[0].artworkUrl100}));

@@ -65,6 +65,9 @@ class VoiceRecognition extends Component {
                 console.log({"response":data.resultText});
                 window.speechSynthesis.speak(utterThis);
             }
+            if(data.resultTextToShow){
+                document.getElementById("resultDiv").innerHTML = data.resultTextToShow.replace(/\r\n/g, '<br>');
+            }
             if(data.resultImage){
                 setTimeout(()=> {
                     document.getElementById("coverAlbum").innerHTML = "<img src='" + data.resultImage + "'>"
