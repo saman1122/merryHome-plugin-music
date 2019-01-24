@@ -55,32 +55,32 @@ class VoiceRecognition extends Component {
     
     sendData(objRequest){
         sendRequest(objRequest.plugin, objRequest.action, objRequest.data).then((data)=>{
+            // Init current result
+            document.getElementById("resultDiv").innerHTML = "";
+            document.getElementById("coverAlbum").innerHTML = "";
+
             if(data.resultText){
                 var utterThis = new SpeechSynthesisUtterance(data.resultText);
                 utterThis.lang = 'fr-FR';
                 console.log({"response":data.resultText});
                 window.speechSynthesis.speak(utterThis);
             }
-            if(data.resultAudio){
-
-                const player = document.getElementById("player");
-                var playerHtml;
-                if(player!== null){
-                    player.pause();
-                 }
-
+            if(data.resultImage){
                 setTimeout(()=> {
-                    if(data.resultAudio.includes("audio")){
-                        playerHtml = "<audio controls id='player'><source src='" + data.resultAudio + "' type='audio/mpeg'/>Your browser does not support the audio element.</audio>";
-                    }else{
-                        playerHtml ="<video id='player' width='100%' controls><source src='" + data.resultAudio + "' type='video/mp4'></video>";
-                    }
-                    document.getElementById("playerDiv").innerHTML = playerHtml;
-                    document.getElementById("player").play();
                     document.getElementById("coverAlbum").innerHTML = "<img src='" + data.resultImage + "'>"
-                    console.log({"audio link: ":data.resultAudio});
                 }, data.resultText.length * 100)
-
+            }
+            if(data.resultVideo){
+                setTimeout(()=> {
+                    document.getElementById("resultDiv").innerHTML = "<video id='player' width='100%' controls><source src='" + data.resultVideo + "' type='video/mp4'></video>";
+                    document.getElementById("player").play();
+                }, data.resultText.length * 100)
+            }
+            if(data.resultAudio){
+                setTimeout(()=> {
+                    document.getElementById("resultDiv").innerHTML = "<audio controls id='player'><source src='" + data.resultAudio + "' type='audio/mpeg'/>Your browser does not support the audio element.</audio>";
+                    document.getElementById("player").play();
+                }, data.resultText.length * 100)
             }
         });
     }
@@ -104,7 +104,7 @@ class VoiceRecognition extends Component {
                 <Button bsStyle="info" onClick={startListening }><Glyphicon glyph="play" /> start </Button> }
                 <div></div>
             <div id="coverAlbum"></div>
-            <div id="playerDiv"></div>
+            <div id="resultDiv"></div>
             </div>
         );
     };

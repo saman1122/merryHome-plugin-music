@@ -7,7 +7,7 @@ class MusicController {
     }
     
     postAction(req, res){
-		var requestUrl="https://itunes.apple.com/search?term=";
+        var requestUrl="https://itunes.apple.com/search?term=";
 		const searchValue = req.body.searchValue;
         const searchValue2 = req.body.searchValue2;
         const searchValue3 = req.body.searchValue3;
@@ -43,11 +43,12 @@ class MusicController {
                 break;
 
             case "play":
+                const resultType = textResponse[0].previewUrl.endsWith(".m4a") ? "resultAudio" : "resultVideo";
                 if(textResponse.length === 0){
                     res.end(JSON.stringify({resultText: "Désolé, je ne trouve pas ce que vous demandez"}));
                 }else{
                     res.end(JSON.stringify({resultText: "Ok, je vous lance: " + textResponse[0].trackName + " de " + textResponse[0].artistName,
-                                            resultAudio: textResponse[0].previewUrl,
+                                            [resultType]: textResponse[0].previewUrl,
                                             resultImage: textResponse[0].artworkUrl100}));
                 }
                 break;
